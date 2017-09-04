@@ -1,4 +1,5 @@
 import os
+import logging as log
 import json
 from pprint import pprint
 import networkx as nx
@@ -14,6 +15,10 @@ with open(recipe_file) as fd:
 for r in recipes:
     if 'output' not in r:
         r.update(r['normal'])
+    if 'iron-gear-wheel' in r['input'] and 'iron-plate' in r['input']:
+        del r['input']['iron-gear-wheel']
+        del r['input']['iron-plate']
+        r['input']['iron-gear-and-plate'] = 'n'
 
 recipes = {r['id']: r for r in recipes}
 
@@ -26,10 +31,11 @@ for r in recipes.values():
         o = r['output'].keys()[0]
         for i, n in r['input'].iteritems():
             g.add_edge(o, i, weight=n)
+
     else:
         print 'Skipping', r['id']
-
-
+for n in g.node:
+    g.node[n]['name'] = n
 
 outputs = [
     'science-pack-1',
@@ -48,5 +54,8 @@ for o in outputs:
     for n in dfs.dfs_preorder_nodes(g, o):
         nodes.add(n)
 factory = g.subgraph(nodes).reverse()
-nx.drawing.nx_agraph.view_pygraphviz(factory)  # , prog='fdp')
 nx.write_graphml(factory, os.path.join(basedir, 'factory.graphml'), prettyprint=True)
+try:
+    nx.drawing.nx_agraph.view_pygraphviz(factory)  # , prog='fdp')
+except ImportError:
+    log.warn
