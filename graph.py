@@ -38,15 +38,18 @@ for n in g.node:
     g.node[n]['name'] = n
 
 outputs = [
-    'science-pack-1',
-    'science-pack-2',
-    'science-pack-3',
-    'fast-inserter',
-    'filter-inserter',
-    'fast-transport-belt',
-    'long-handed-inserter',
-    'assembling-machine-2',
-    'rail',
+#     'science-pack-1',
+#     'science-pack-2',
+#     'science-pack-3',
+#     'fast-inserter',
+#     'filter-inserter',
+#     'fast-transport-belt',
+#     'long-handed-inserter',
+#     'assembling-machine-2',
+#     'rail',
+    'solar-panel',
+    'laser-turret',
+    'gun-turret',
 ]
 
 nodes = set()
